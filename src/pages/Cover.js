@@ -2,15 +2,13 @@ import { useNavigate } from "react-router-dom";
 import video from "../assets/video.mp4";
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { FiUser } from "react-icons/fi";
-import ThemeSwitcher from "../assets/components/ThemeSwitcher";
+import { GiBookmark } from "react-icons/gi";
 
 function Cover() {
   let navigate = useNavigate();
   return (
     <>
-      {" "}
-      <Flex justifyContent={"space-between"} m={"30px"}>
-        <ThemeSwitcher />
+      <Flex justifyContent="flex-end" mr={30}>
         <Button
           colorScheme="teal"
           size="md"
@@ -22,18 +20,19 @@ function Cover() {
           Login
         </Button>
       </Flex>
-      <Flex alignItems="center" justifyContent="center" mt={"120px"}>
-        <Flex flexDirection={"column"} alignItems={"center"}>
-          <Text fontSize={"50px"} as="i" mr={"30px"}>
+      <Flex alignItems="center" justifyContent="center" mt="120px">
+        <Flex flexDirection="column" alignItems="center">
+          <GiBookmark fontSize="50px" mr={30} />
+          <Text fontSize="50px" as="i" mr={30}>
             Bookmark manager
           </Text>
-          <Text fontSize={"25px"} as="i" mr={"30px"} mt={"20px"}>
+          <Text fontSize="25px" as="i" mr={30} mt="20px">
             Intuitive. Powerful. Runs everywhere
           </Text>
           <Button
             colorScheme="teal"
             size="md"
-            mt={"20px"}
+            mt="20px"
             onClick={() => {
               navigate("sign-up");
             }}
@@ -43,8 +42,8 @@ function Cover() {
         </Flex>
         <video
           src={video}
-          height={"500px"}
-          width={"500px"}
+          height="500px"
+          width="500px"
           autoPlay
           loop
           muted

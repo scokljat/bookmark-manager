@@ -12,6 +12,8 @@ function ThemeSwitcher() {
         size="md"
         alignSelf="flex-end"
         onClick={toggleColorMode}
+        m={30}
+        mb={5}
       />
     </VStack>
   );
