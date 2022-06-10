@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { GiBookmark } from "react-icons/gi";
@@ -11,9 +12,13 @@ import {
   Flex,
   Text,
 } from "@chakra-ui/react";
+import { signIn } from "../actions";
+import { Navigate } from "react-router-dom";
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
+
+  const dispatch = useDispatch();
 
   const {
     handleSubmit,
@@ -22,11 +27,12 @@ function Signup() {
     watch,
   } = useForm();
 
-  const isInvalid = watch("userName", false) && watch("password", false);
+  const isInvalid = watch("email", false) && watch("password", false);
 
   const onSubmit = (values) => {
-    console.log(values);
+    dispatch(signIn(values));
   };
+
   return (
     <>
       <form method="POST" onSubmit={handleSubmit(onSubmit)}>
@@ -37,22 +43,14 @@ function Signup() {
             </Text>
             <FormControl>
               <Input
-                {...register("userName", {
-                  required: "Username is required!",
-                  minLength: {
-                    value: 2,
-                    message: "Username must be at least 2 charachters!",
-                  },
-                  maxLength: {
-                    value: 20,
-                    message: "Username must not exceed 20 characters!",
-                  },
+                {...register("email", {
+                  required: "Email is required!",
                 })}
-                type="text"
-                placeholder="Username"
+                type="email"
+                placeholder="Email"
                 mb={5}
               />
-              {errors.userName && <Text pb={5}>{errors.userName.message}</Text>}
+              {errors.email && <Text pb={5}>{errors.email.message}</Text>}
             </FormControl>
             <FormControl>
               <InputGroup>
@@ -87,7 +85,6 @@ function Signup() {
               </InputGroup>
               {errors.password && <Text pb={5}>{errors.password.message}</Text>}
             </FormControl>
-
             <Button
               disabled={!isInvalid}
               colorScheme="teal"
@@ -97,7 +94,6 @@ function Signup() {
             >
               Login
             </Button>
-
             <NavLink to="/sign-up">
               <Text fW="bold" pl={4} color="teal" mb={5}>
                 Sign up

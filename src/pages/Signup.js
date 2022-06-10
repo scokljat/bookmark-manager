@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { GiBookmark } from "react-icons/gi";
@@ -11,9 +12,12 @@ import {
   Flex,
   Text,
 } from "@chakra-ui/react";
+import { signUp } from "../actions";
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
+
+  const dispatch = useDispatch();
 
   const {
     handleSubmit,
@@ -22,13 +26,10 @@ function Signup() {
     watch,
   } = useForm();
 
-  const isInvalid =
-    watch("email", false) &&
-    watch("userName", false) &&
-    watch("password", false);
+  const isInvalid = watch("email", false) && watch("password", false);
 
   const onSubmit = (values) => {
-    console.log(values);
+    dispatch(signUp(values));
   };
   return (
     <>
@@ -48,25 +49,6 @@ function Signup() {
                 mb={5}
               />
               {errors.email && <Text pb={5}>{errors.email.message}</Text>}
-            </FormControl>
-            <FormControl>
-              <Input
-                {...register("userName", {
-                  required: "Username is required!",
-                  minLength: {
-                    value: 2,
-                    message: "Username must be at least 2 charachters!",
-                  },
-                  maxLength: {
-                    value: 20,
-                    message: "Username must not exceed 20 characters!",
-                  },
-                })}
-                type="text"
-                placeholder="Username"
-                mb={5}
-              />
-              {errors.userName && <Text pb={5}>{errors.userName.message}</Text>}
             </FormControl>
             <FormControl>
               <InputGroup>
@@ -101,7 +83,6 @@ function Signup() {
               </InputGroup>
               {errors.password && <Text pb={5}>{errors.password.message}</Text>}
             </FormControl>
-
             <Button
               disabled={!isInvalid}
               colorScheme="teal"
@@ -111,7 +92,6 @@ function Signup() {
             >
               Sign up
             </Button>
-
             <NavLink to="/login">
               <Text fW="bold" pl={4} mb={5} color="teal">
                 Login
